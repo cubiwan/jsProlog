@@ -6,8 +6,20 @@ First, the interpreter was made by Jan, you can find it in http://ioctl.org/logi
 
 ## Load
 
+### Browser
+
 ```html
 <script src="jsProlog.js"></script>
+```
+```js
+var program = new jsProlog.program();
+```
+
+### Node
+
+```js
+var prolog = require("./jsProlog.js");
+var program = new prolog.program();
 ```
 
 ## Initialice
@@ -29,11 +41,6 @@ prolog.addRule(rule);
 Add a new rule (I don't make diference between facts and rules)
 
 ```js
-prolog.loadProgram = function(rules){
-```
-Load text ad program, each lines is a rule
-
-```js
 prolog.askQuery(query)
 ```
 Execute one query return an array of Answers:
@@ -50,3 +57,13 @@ _name_: variable name
 _value_: value
 
 When answer is a boolean answer when is true name is '_' and value is true (no answer means false)
+
+## Example
+
+```js
+program.addRule("human(socrates).");
+program.addRule("mortal(X) :- human(X).");
+var answer = program.askQuery("mortal(socrates).");
+console.log(answer.value);
+```
+
