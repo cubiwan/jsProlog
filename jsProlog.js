@@ -1,4 +1,6 @@
-function jsProlog(){
+(function(exports){
+
+exports.program = function(){
 	var solutions = [];
 	var outr = [];
 	outr.builtin = [];
@@ -24,7 +26,7 @@ function jsProlog(){
 		}
 	}
 
-	//return an array whit all rules in text (prolog code)
+	//return an array with all rules in text (prolog code)
 	this.getRules = function(){
 		var code = [];
 		for (var i=0; i < outr.length; i++) {
@@ -52,17 +54,6 @@ function jsProlog(){
 		return solutions;
 	}
 
-	//load text ad program, each lines is a rule
-	this.loadProgram = function(rules){
-		rules = rules.split("\n");
-		var outi=0;
-		for (var r=0; r < rules.length; r++) {
-			var rule = rules[r];
-			this.addRule(rule);
-		}
-	}
-
-
 	function print(str) {
 		return str;
 	}
@@ -79,8 +70,8 @@ function jsProlog(){
 			solutions.push(ans);
 		} else {
 			for (var i=0; i<which.length; i++) {
-				var val = value(new Variable(which[i].name + ".0"), environment);
-				var ans = new Answer(which[i].name,val.name);
+				var val = value(new Variable(which[i].name + ".0"), environment).print();
+				var ans = new Answer(which[i].name,val);
 				solutions.push(ans);
 			}
 		}
@@ -329,7 +320,7 @@ function jsProlog(){
 							str += x.print();
 						}
 						str += "]";
-						//return str;
+						return str;
 					}
 				}
 				str += "" + this.name + "(";
@@ -907,3 +898,4 @@ function jsProlog(){
 		return prove(goalList, env2, db, level+1, reportFunction);
 	}
 };
+})(typeof exports === 'undefined'? this['jsProlog']={}: exports);
