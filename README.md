@@ -67,3 +67,6 @@ var answer = program.askQuery("mortal(socrates).");
 console.log(answer.value);
 ```
 
+## Demo
+
+Test your prolog code in this [demo](https://cubiwan.github.io/jsProlog/index.html)
