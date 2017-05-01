@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0036)http://ioctl.org/logic/prolog-latest -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+
+
+<script src="jsProlog.js"></script>
+
+<script language="JavaScript">
+<!--
+
+
+var program;
+
+function run(){
+	var rules = document.rules.rules.value;
+	var query = document.input.query.value;
+	program = new jsProlog.program();
+	loadProgram(program, rules);
+	var sol = program.askQuery(query);
+	document.output.output.value = "";
+	for(var i = 0; i < sol.length; i++){
+		document.output.output.value += sol[i].print()+"\n";
+	}
+
+	//load text as program, each lines is a rule
+	function loadProgram(program, rules){
+		rules = rules.split("\n");
+		for (var r=0; r < rules.length; r++) {
+			var rule = rules[r];
+			program.addRule(rule);
+		}
+	}
+}
+
+// -->
+</script>
+</head>
+<body data-feedly-mini="yes">
+
+
+<form name="rules" action="javascript:return false;"><p>
+<textarea cols="90" rows="40" name="rules">
+# Enter your ruleset in here.
+triple(sc, a, b).
+triple(sc, b, c).
+triple(sc, c, d).
+triple(sc, d, e).
+triple(sc, e, f).
+triple(sc, f, g).
+triple(type, sc, transitive).
+
+triple(P, X, Y) :- NOTTHIS triple(type, P, transitive), NOTTHIS triple(P, X, Z), triple(P, Z, Y).
+
+arcsOut(X, L) :- bagof(O, triple(P, X, O), L).
+
+### Accumulated standard library lives under here!
+
+# unification and ( x, y, z; w ) support
+
+unify(X, X).
+
+# ( a, b, c ) --&gt; conjunction([a, b, c])
+conjunction([]).
+conjunction([X | Rest]) :- call(X), conjunction(Rest).
+
+# ( a; b; c ) --&gt; disjunction([a, b, c])
+disjunction([X | Rest]) :- call(X).
+disjunction([X | Rest]) :- disjunction(Rest).
+
+# Arithmetic
+add(A, B, C) :- external("$1 + $2", [A, B], C).   # A + B = C, etc.
+sub(A, B, C) :- external("$1 - $2", [A, B], C).
+mul(A, B, C) :- external("$1 * $2", [A, B], C).
+div(A, B, C) :- external("$1 / $2", [A, B], C).
+
+# The canonical quicksort
+qsort([], []).
+qsort([X|Rest], Answer) :- partition(X, Rest, [], Before, [], After), qsort(Before, Bsort), qsort(After, Asort), append(Bsort, [X | Asort], Answer).
+
+partition(X, [], Before, Before, After, After).
+partition(X, [Y | Rest], B, [Y | Brest], A, Arest) :- leq(X, Y), partition(X, Rest, B, Brest, A, Arest).
+partition(X, [Y | Rest], B, Brest, A, [Y | Arest]) :- gtr(X, Y), partition(X, Rest, B, Brest, A, Arest).
+
+leq(X, Y) :- compare(X, Y, gt).
+leq(X, Y) :- compare(X, Y, eq).
+gtr(X, Y) :- compare(X, Y, lt).
+
+# Some list-processing stuff...
+append([], Z, Z).
+append([A|B], Z, [A|ZZ]) :- append(B, Z, ZZ).
+
+reverse([], []).
+reverse([A|B], Z) :- reverse(B, Brev), append(Brev, [A], Z).
+
+length([], 0).
+length([H|T], N) :- length(T, M), add(M, 1, N).
+
+# Standard prolog not/1
+not(Term) :- call(Term), !, fail.
+not(Term).
+
+# Standard prolog var/1
+var(X) :- bagof(l, varTest(X), [l, l]).
+varTest(a).
+tarTest(b).
+
+</textarea></p>
+</form>
+<form name="input" action="javascript:freeform(); //">
+<p>	Enter your query:
+</p>
+<p>	<input type="text" name="query" value="bagof(c, triple(sc, A, B), L), length(L, N) # L should have 21 elements" size="90">
+</p>
+<p>
+	<input type="button" value="Run query" onclick="run(); return true;">
+</p>
+</form>
+<form name="output" action="javascript:return false;">
+<p>
+<textarea rows="40" cols="90" name="output"></textarea>
+</p>
+</form>
+
+
+
+</body></html>
