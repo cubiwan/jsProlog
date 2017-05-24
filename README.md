@@ -22,12 +22,6 @@ var prolog = require("./jsProlog.js");
 var program = new prolog.program();
 ```
 
-## Initialice
-
-```js
-var prolog = new jsProlog();
-```
-
 ## Interface
 
 ```js
