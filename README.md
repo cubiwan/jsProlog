@@ -63,4 +63,4 @@ console.log(answer.value);
 
 ## Demo
 
-Test your prolog code in this [demo](https://cubiwan.github.io/jsProlog/index.html)
+Test your prolog code in this [demo](https://cubiwan.github.io/jsProlog/demo.html)
