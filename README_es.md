@@ -1,4 +1,4 @@
-[:es:]( | :uk:
+[:es:](https://cubiwan.github.io/jsProlog/README_es) | [:uk:](https://cubiwan.github.io/jsProlog/)
 
 # jsProlog
 
