@@ -1,3 +1,5 @@
+[Español](https://cubiwan.github.io/jsProlog/README_es) # [English](https://cubiwan.github.io/jsProlog/)
+
 # jsProlog
 
 Prolog interpreter in JS 
