@@ -1,6 +1,6 @@
 # jsProlog
 
-Prolog interpreter in JS
+Prolog interpreter in JS 
 
 First, the interpreter was made by Jan, you can find it in http://ioctl.org/logic/prolog-latest I only encapsulates it and creates a few funtions to access.
 
@@ -63,4 +63,4 @@ console.log(answer.value);
 
 ## Demo
 
-Test your prolog code in this [demo](https://cubiwan.github.io/jsProlog/demo.html)
+Test your prolog code here: [demo](https://cubiwan.github.io/jsProlog/demo.html)
